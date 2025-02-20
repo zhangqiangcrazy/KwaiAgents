@@ -7,7 +7,6 @@ import traceback
 
 import openai
 
-
 def make_gpt_messages(query, system, history):
     msgs = list()
     if system:
