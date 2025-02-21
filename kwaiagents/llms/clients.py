@@ -6,6 +6,7 @@ import time
 import traceback
 
 import openai
+from openai import OpenAI
 
 def make_gpt_messages(query, system, history):
     msgs = list()
@@ -29,6 +30,27 @@ def make_gpt_messages(query, system, history):
     })
     return msgs
 
+def make_ollama_chat_messages(query, system, history):
+    msgs = list()
+    if system:
+        msgs.append({
+            "role": "system",
+            "content": system
+        })
+    for q, a in history:
+        msgs.append({
+            "role": "user",
+            "content": str(q)
+        })
+        msgs.append({
+            "role": "assistant",
+            "content": str(a)
+        })
+    msgs.append({
+        "role": "user",
+        "content": query
+    })
+    return msgs
 
 class OpenAIClient(object):
     def __init__(self, model="gpt-3.5-turbo"):
@@ -62,6 +84,29 @@ class OpenAIClient(object):
             print(traceback.format_exc())
             response_text = ""
 
+        new_history = history[:] + [[query, response_text]]
+        return response_text, new_history
+
+
+class OllamaChatClient(object):
+    def __init__(self, model="qwen2.5:7b", host="localhost", port=11434):
+        self.model = model
+        self.client = OpenAI(
+            base_url=f'http://{host}:{port}/v1/',
+            api_key='ollama',  # required but ignored
+        )
+
+    def chat(self, query, history=list(), system="", temperature=0.0, stop="", *args, **kwargs):
+        msgs = make_ollama_chat_messages(query, system, history)
+        try:
+            response = self.client.chat.completions.create(
+                messages=msgs,
+                model=self.model,
+            )
+            response_text = response.choices[0].message.content
+        except:
+            print(traceback.format_exc())
+            response_text = ""
         new_history = history[:] + [[query, response_text]]
         return response_text, new_history
 

@@ -3,7 +3,7 @@ import time
 import traceback
 
 from kwaiagents.config import CFG
-from kwaiagents.llms.clients import OpenAIClient, FastChatClient
+from kwaiagents.llms.clients import OpenAIClient, FastChatClient,OllamaChatClient
 
 
 def create_chat_completion(
@@ -17,7 +17,7 @@ def create_chat_completion(
     chat_id: str = None
 ) -> tuple[str, list[tuple[str, str]]]:
     if CFG.use_local_llm:
-        llm_bot = FastChatClient(llm_model_name.lower(), host=CFG.local_llm_host, port=CFG.local_llm_port)
+        llm_bot = OllamaChatClient(llm_model_name.lower(), host=CFG.local_llm_host, port=CFG.local_llm_port)
     else:
         llm_bot = OpenAIClient(llm_model_name.lower())
     response = None
