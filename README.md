@@ -190,6 +190,13 @@ kagentsys --query="Who is Andy Lau's wife?" --llm_name="kagentlms_qwen_7b_mat" \
 --use_local_llm --local_llm_host="localhost" --local_llm_port=8888 --lang="en"
 ```
 
+```bash
+kagentsys --query="刘德华老婆是谁？" --llm_name="qwen2.5:7b" --use_local_llm --local_llm_host="localhost" --local_llm_port=11434 --lang="zh"
+```
+
+```bash
+kagentsys --query="格力电器主业时啥和2024年净利润时多少?" --llm_name="qwen2.5:7b" --use_local_llm --local_llm_host="localhost" --local_llm_port=11434 --lang="zh"
+```
 
 Full command arguments:
 

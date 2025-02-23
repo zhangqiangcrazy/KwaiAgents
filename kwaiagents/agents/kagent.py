@@ -127,8 +127,8 @@ class KAgentSysLite(object):
 
     def task_plan(self, goal, memory):
         prompt = make_planning_prompt(self.agent_profile, goal, self.tools, memory, self.cfg.max_tokens_num, self.tokenizer, lang=self.lang)
-        # print(f'\n************** TASK PLAN AGENT PROMPT *************')
-        # print(prompt)
+        print(f'\n************** TASK PLAN AGENT PROMPT *************')
+        print(prompt)
         try:
             response, _ = create_chat_completion(
             query=prompt, llm_model_name=self.cfg.smart_llm_model)
@@ -140,6 +140,7 @@ class KAgentSysLite(object):
                 llm_name=self.cfg.smart_llm_model)
             response = correct_json(find_json_dict(response))
             task = json.loads(response)
+            print(f"newTask: {task}")
             new_tasks = [task]
         except:
             print(traceback.format_exc())

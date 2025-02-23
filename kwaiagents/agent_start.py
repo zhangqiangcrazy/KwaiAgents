@@ -101,7 +101,7 @@ def main():
     parser.add_argument("--local_llm_port", type=int, default="8888", help="The port of local llm service")
 
     parser.add_argument("--tool_names", type=str, default='["auto"]', help="the name of llm")
-    parser.add_argument("--max_iter_num", type=int, default=1, help="the number of iteration of agents")
+    parser.add_argument("--max_iter_num", type=int, default=10, help="the number of iteration of agents")
     parser.add_argument("--agent_name", type=str, default="", help="The agent name")
     parser.add_argument("--agent_bio", type=str, default="", help="The agent bio, a short description")
     parser.add_argument("--agent_instructions", type=str, default="", help="The instructions of how agent thinking, acting, or talking")
